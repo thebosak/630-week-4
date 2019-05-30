@@ -21,17 +21,26 @@ connection.execute('''INSERT INTO People (PersonID, Name, Position, Phone, Locat
 connection.execute('''INSERT INTO People (PersonID, Name, Position, Phone, Location) VALUES ('4','Edward','Toadie','None','Basement')''')
 connection.execute('''INSERT INTO People (PersonID, Name, Position, Phone, Location) VALUES ('5','Brad','Captain','555-123-0005','Captains Quarters')''')
 connection.execute('''CREATE TABLE Experiment(
-    Researcher text,
+    ResearcherID integer,
     Experiment text)''')
-connection.execute('''INSERT INTO Experiment (Researcher, Experiment) VALUES ('Alice','EPV Vaccine trial')''')
-connection.execute('''INSERT INTO Experiment (Researcher, Experiment) VALUES ('Bob','Zombie Outbreak')''')
-connection.execute('''INSERT INTO Experiment (Researcher, Experiment) VALUES ('Charles','XYZ thing')''')
-connection.execute('''INSERT INTO Experiment (Researcher, Experiment) VALUES ('Edward','Basement disease')''')
-connection.execute('''INSERT INTO Experiment (Researcher, Experiment) VALUES ('Brad','None')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('0','EPV Vaccine trial')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('1','Zombie Outbreak')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('2','XYZ thing')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('3','Andromeda Strain')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('4','Basement disease')''')
+connection.execute('''INSERT INTO Experiment (ResearcherID, Experiment) VALUES ('5','None')''')
 crsr = connection.cursor()
 #crsr.execute('select * from Experiment')
-crsr.execute('select p.Name, e.Experiment from People as p join Experiment as e where e.Researcher == p.Name')
+crsr.execute('select p.Name, e.Experiment from People as p join Experiment as e where e.ResearcherID == p.PersonID')
 rows = crsr.fetchall()
+#for row in rows:
+#    print (row)
+for i in rows:
+    print ('Name: %s\n\tExperiment: %s' % (i[0],i[1]))
+
+connection.execute("delete from People where PersonID == '0'")
+crsr.execute('select * from People')
+rows=crsr.fetchall()
 for row in rows:
-    print (row)
+    print(row)
 connection.close()
