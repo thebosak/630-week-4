@@ -58,6 +58,7 @@ connection.execute("UPDATE Experiment SET ResearcherID = '6' WHERE ResearcherID 
 crsr.execute('SELECT P.Name, E.Experiment FROM People AS P JOIN Experiment AS E where E.ResearcherID == P.PersonID')
 rows = crsr.fetchall()
 print("After reassigning Alice's experiment:")
+print()
 for i in rows:
     print ('Name: %s\n\tExperiment: %s' % (i[0],i[1]))
 connection.close()
